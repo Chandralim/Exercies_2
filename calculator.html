@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  <style type="text/css">
+    body {
+      background-color: #f8f9fa;
+      min-width: 340px;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="width:100%; height:100vh; display:table;">
+    <span style="display: table-cell; vertical-align:middle;">
+      <div style="width:430px; margin:auto; border:1px solid #ccc; padding:10px;">
+
+        <div id="note" class="text-center" style="background-color:#de6464; height:20px; margin:0px 0px 5px 0px; color:white; font-size:0.7em; padding:2px; width:100%;">
+
+        </div>
+
+        <div>
+          <div class="form-group">
+            <label class="bold" for="">Calculator</label>
+            <input type="text" readonly="readonly" class="form-control text-right" id="screenBox" placeholder="">
+          </div>
+        </div>
+
+        <div class="row" style="padding:0px 5px;">
+          <div class="col text-center" style="padding:5px;"> <button type="button" class="btn btn-primary" style="width:100%;" onclick="msk('7')"> 7 </button> </div>
+          <div class="col text-center" style="padding:5px;"> <button type="button" class="btn btn-primary" style="width:100%;" onclick="msk('8')"> 8 </button> </div>
+          <div class="col text-center" style="padding:5px;"> <button type="button" class="btn btn-primary" style="width:100%;" onclick="msk('9')"> 9 </button> </div>
+          <div class="col text-center" style="padding:5px;"> <button type="button" class="btn btn-primary" style="width:100%;" onclick="op('+')"> + </button> </div>
+        </div>
+        <div class="row" style="padding:0px 5px;">
+          <div class="col text-center" style="padding:5px;"> <button type="button" class="btn btn-primary" style="width:100%;" onclick="msk('4')"> 4 </button> </div>
+          <div class="col text-center" style="padding:5px;"> <button type="button" class="btn btn-primary" style="width:100%;" onclick="msk('5')"> 5 </button> </div>
+          <div class="col text-center" style="padding:5px;"> <button type="button" class="btn btn-primary" style="width:100%;" onclick="msk('6')"> 6 </button> </div>
+          <div class="col text-center" style="padding:5px;"> <button type="button" class="btn btn-primary" style="width:100%;" onclick="op('-')"> - </button> </div>
+        </div>
+
+        <div class="row" style="padding:0px 5px;">
+          <div class="col text-center" style="padding:5px;"> <button type="button" class="btn btn-primary" style="width:100%;" onclick="msk('1')"> 1 </button> </div>
+          <div class="col text-center" style="padding:5px;"> <button type="button" class="btn btn-primary" style="width:100%;" onclick="msk('2')"> 2 </button> </div>
+          <div class="col text-center" style="padding:5px;"> <button type="button" class="btn btn-primary" style="width:100%;" onclick="msk('3')"> 3 </button> </div>
+          <div class="col text-center" style="padding:5px;"> <button type="button" class="btn btn-primary" style="width:100%;" onclick="op(':')"> : </button> </div>
+        </div>
+
+        <div class="row" style="padding:0px 5px;">
+          <div class="col-9 text-center" style="padding:5px;">
+            <button class="btn btn-success" type="button" name="button" style="width:100%;" onclick="hitung()"> = </button>
+          </div>
+          <div class="col text-center" style="padding:5px;"> <button type="button" class="btn btn-primary" style="width:100%;" onclick="op('x')"> x </button> </div>
+        </div>
+
+      </div>
+    </span>
+  </div>
+
+  <script type="text/javascript">
+    var n1 = "";
+    var n2 = "";
+    var reset = true;
+    var position = 1;
+    var operator = "";
+
+    var screenBox = document.getElementById("screenBox");
+    var note = document.getElementById("note");
+    var hasil = "";
+
+    function msk(angka) {
+      if (reset) {
+        screenBox.value = "";
+        note.innerHTML = "";
+      };
+
+      if (position == 1) {
+        reset = false;
+        n1 += angka;
+      } else n2 += angka;
+
+      hasil += angka;
+      screenBox.value = hasil;
+    }
+
+    function op(ops) {
+      if (n1 == "") {
+        note.innerHTML = "Tekan Angka Terlebih";
+        return;
+      } else {
+        note.innerHTML = "";
+      }
+
+      if (position == 1) {
+        operator = ops;
+        hasil += ops;
+        screenBox.value = hasil;
+        position++;
+      } else {
+        note.innerHTML = "Maaf Calculator ini hanya dapat melakukan 1 perhitungan dalam 1 waktu";
+      }
+    }
+
+    function hitung() {
+      var hsl = 0;
+      var n1v = (n1 == "" ? 0 : parseInt(n1));
+      var n2v = (n2 == "" ? 0 : parseInt(n2));
+      if (operator == "+") hsl = n1v + n2v;
+      if (operator == "-") hsl = n1v - n2v;
+      if (operator == "x") hsl = n1v * n2v;
+      if (operator == ":") hsl = n1v / n2v;
+      screenBox.value = hsl;
+
+      n1 = "";
+      n2 = "";
+      position = 1;
+      reset = true;
+      hasil = "";
+      note.innerHTML = "";
+    }
+  </script>
+</body>
+
+</html>
